@@ -1,21 +1,29 @@
-import { useState } from "react";
 import "./App.css";
 import Greeting from "./components/greeting";
 import DefaultLayout from "./components/layouts/defaultLayout";
+import { ThemeContextProvider, useThemeContext } from "./contexts/themeContext";
+import { UserContextProvider } from "./contexts/userContext";
+
+function AppWrapper({children}) {
+    const { theme } = useThemeContext();
+  return (
+  <div className={`app ${theme}`}>
+    {children}
+  </div>
+  )
+}
 
 function App() {
-  const [theme, setTheme] = useState("light");
-  const [username, setUsername] = useState("");
   return (
-    <div className={`app ${theme}`}>
-      <DefaultLayout
-        theme={theme}
-        setTheme={setTheme}
-        setUsername={setUsername}
-        username={username}
-        contentRenderer={<Greeting theme={theme} username={username} />}
-      />
-    </div>
+    <ThemeContextProvider>
+      <UserContextProvider>
+      <AppWrapper>
+        <DefaultLayout
+          contentRenderer={<Greeting />}
+        />
+      </AppWrapper>
+      </UserContextProvider>
+    </ThemeContextProvider>
   );
 }
 

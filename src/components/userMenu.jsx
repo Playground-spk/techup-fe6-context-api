@@ -1,11 +1,12 @@
 import { useState } from "react";
+import { useUserContext } from "../contexts/userContext";
 
-function Login({ setUsername }) {
+function Login() {
   const [input, setInput] = useState("");
+  const { login } = useUserContext();
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("setUsername", setUsername);
-    setUsername(input);
+    login(input);
     setInput("");
   };
 
@@ -27,26 +28,26 @@ function Login({ setUsername }) {
   );
 }
 
-function Logout({ setUsername, username }) {
+function Logout() {
+  const { username, logout } = useUserContext();
   return (
     <>
       <span>Hi, {username}</span>
       <button
-        onClick={() => {
-          setUsername("");
-        }}
+        onClick={logout}
       >Logout</button>
     </>
   );
 }
 
-export default function UserMenu({ setUsername, username }) {
+export default function UserMenu() {
+  const { username } = useUserContext();
   return (
     <>
       {username ? (
-        <Logout setUsername={setUsername} username={username} />
+        <Logout  />
       ) : (
-        <Login setUsername={setUsername} />
+        <Login />
       )}
     </>
   );

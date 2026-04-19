@@ -1,9 +1,11 @@
-export default function ThemeToggle({ theme, setTheme }) {
+import { useThemeContext } from "../contexts/themeContext";
+
+
+export default function ThemeToggle() {
+  const { theme, toggle } = useThemeContext();
   return (
     <button
-      onClick={() => {
-        setTheme(theme === "light" ? "dark" : "light");
-      }}
+      onClick={toggle}
       className="icon"
       title="Toggle Theme"
     >
